@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "promtstd"
-version = "1.0.0"
+version = "1.0.1"
 description = "promtstd robot - универсальный стандарт для хранения и использования промтов в AI. books Основан на Markdown, обеспечивает легкость чтения и структурированность. "
 authors = ["Denis Kustov <pro-progerkustov@yandex.ru>"]
 readme = "README.md"
