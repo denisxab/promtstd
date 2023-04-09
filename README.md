@@ -68,6 +68,8 @@
   # doc
   # base_promt
   # tools
+  ## Название для вспомогательного прмота 1
+  ## Название для вспомогательного прмота ...
   # expl
   ## Название для примера запроса 1
   ### Название для примера ответа 1 
@@ -251,7 +253,7 @@ I want you to become my Prompt Creator. Your goal is to help me craft the best p
 
 3. We will continue this iterative process with me providing additional information to you and you updating the prompt in the Revised prompt section until it's complete.
 
-Задавай мне вопросы и пиши ответы на русском языке
+Задавай мне вопросы и пиши ответы на русском языке.
 ```
 
 # tools

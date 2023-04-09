@@ -41,8 +41,8 @@ pin = Path(__file__).parent.parent.parent / "examples"
         ),
         (
             Path("Создание промтов вместе с ChatGpt.md"),
-            "7aad7e05aaa03bad52c5fd4626f2c6519114ca6abdde11e9b2daeeee6b9365cc",
-            "7065e774d0a958706b20cd0011c0d7f2b8c577d844a94f8cd1ea6a3ed7edbeeb",
+            "13565a0d94fc8ee52038c74cf5e248c3ec0eb1e668b175ecb12b8ad759f0234b",
+            "9bbf0eeea796c29c093ceb90581558fac97022aee3e76e9e304e857ec08e618a",
         ),
         # ?
         # ? Сюда добавлять новые примеры тестовых файлов

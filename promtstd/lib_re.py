@@ -8,7 +8,7 @@ class RePromt:
     ## Для парсинга Markdown
     #
     # ? Заголовок первого уровня
-    h1_pattern = r"(\n#{{1}} {header}\n)(?P<{group_name}>(.*\s*(?!#{{1}} ))+)"
+    h1_pattern = r"((?:\n|\A)#{{1}} {header}\n)(?P<{group_name}>(.*\s*(?!#{{1}} ))+)"
     # ? Комментарии в Markdown
     md_comment = compile(r"%[^%]+%")
     # ? Парсинг markdown словарей
