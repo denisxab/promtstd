@@ -1,0 +1,80 @@
+{
+    "name": "Генерация кода на Python.md",
+    "meta": {
+        "for_": [
+            "ChatGPT"
+        ],
+        "use": [
+            "Первое сообщение"
+        ],
+        "group": "examples",
+        "tags": [
+            "Python",
+            "Code"
+        ],
+        "version": null
+    },
+    "doc": "Этот промт используется для написание документации к коду. В частности для языка программирования Python",
+    "base_promt": {
+        "promt": {
+            "text_promt": "Напиши докстригки к этому {ЧемуДокументация}. В ответ отправь только имя класса/метода и его докстринг:\n\n{{CODE}}",
+            "vars": [
+                {
+                    "name": "CODE",
+                    "doc": " Код которому нужно написать документацию",
+                    "default": null,
+                    "allowed": []
+                },
+                {
+                    "name": "ЧемуДокументация",
+                    "doc": " К чему нужно писать документацию",
+                    "default": "Класс и метод",
+                    "allowed": [
+                        "Класс",
+                        "Метод",
+                        "Класс и метод",
+                        "Атрибуты"
+                    ]
+                }
+            ]
+        }
+    },
+    "tools_promt": {
+        "promts": [
+            {
+                "about_promt": null,
+                "text_promt": "Продолжи свой ответ, с того места где ты закончил прошлый",
+                "vars": []
+            },
+            {
+                "about_promt": null,
+                "text_promt": "Напиши снова главу: {{ИмяГлавы}}",
+                "vars": [
+                    {
+                        "name": "ИмяГлавы",
+                        "doc": " Название главы",
+                        "default": null,
+                        "allowed": []
+                    }
+                ]
+            }
+        ]
+    },
+    "expl": [
+        {
+            "name": "Пример написание документация для тестов",
+            "in_text": "\n```python\nclass SubdivisionSearchApiViewTests(APITestCaseAuthorization):\n    def setUp(self):\n        super().setUp()\n        self.url = reverse(\"subdivisionsearch\")\n\n    def test_list_subdivisions(self):\n        response = self.client.get(self.url)\n        self.assertEqual(response.status_code, status.HTTP_200_OK)\n        self.assertEqual(len(response.data[\"results\"]), 2)\n        self.assertEqual(\n            response.data[\"results\"][0], SubdivisionSerializer(self.subdivision).data\n        )\n        self.assertEqual(\n            response.data[\"results\"][1], SubdivisionSerializer(self.subdivision2).data\n        )\n\n    def test_create_subdivision(self):\n        new_data = {\n            \"department\": self.department.id,\n            \"name\": \"Отделение 3\",\n            \"start_date\": \"2023-03-01\",\n        }\n        response = self.client.post(self.url, new_data)\n        self.assertEqual(response.status_code, status.HTTP_201_CREATED)\n        self.assertTrue(Subdivision.objects.filter(name=new_data[\"name\"]).exists())\n\n    def test_filter_subdivisions_by_department(self):\n        response = self.client.get(self.url)\n        self.assertEqual(response.status_code, status.HTTP_200_OK)\n        self.assertEqual(len(response.data[\"results\"]), 2)\n        self.assertEqual(\n            response.data[\"results\"][0], SubdivisionSerializer(self.subdivision).data\n        )\n        self.assertEqual(\n            response.data[\"results\"][1], SubdivisionSerializer(self.subdivision2).data\n        )\n\n    def test_filter_subdivisions_by_date(self):\n        response = self.client.get(self.url)\n        self.assertEqual(response.status_code, status.HTTP_200_OK)\n        self.assertEqual(len(response.data[\"results\"]), 2)\n        self.assertEqual(\n            response.data[\"results\"][0], SubdivisionSerializer(self.subdivision).data\n        )\n        self.assertEqual(\n            response.data[\"results\"][1], SubdivisionSerializer(self.subdivision2).data\n        )\n```\n",
+            "out_text": {
+                "Пример 1": "\nКласс: SubdivisionSearchApiViewTests\n\nДокстринг класса:\nТесты для представления API поиска подразделений\n\nМетод: setUp\n\nДокстринг метода:\nПереопределение метода setUp для настройки тестового окружения\n\nМетод: test_list_subdivisions\n\nДокстринг метода:\nТест для проверки получения списка подразделений\n\nМетод: test_create_subdivision\n\nДокстринг метода:\nТест для проверки создания нового подразделения\n\nМетод: test_filter_subdivisions_by_department\n\nДокстринг метода:\nТест для проверки фильтрации подразделений по отделу\n\nМетод: test_filter_subdivisions_by_date\n\nДокстринг метода:\nТест для проверки фильтрации подразделений по дате\n",
+                "Пример 2": "\nКласс: SubdivisionSearchApiViewTests\nДокстринг: Класс для тестирования API поиска подразделений.\n\nМетод: setUp\nДокстринг: Настраивает тестовый случай перед каждым тестом.\n\nМетод: test_list_subdivisions\nДокстринг: Тест проверяет получение списка всех подразделений.\n\nМетод: test_create_subdivision\nДокстринг: Тест проверяет создание нового подразделения.\n\nМетод: test_filter_subdivisions_by_department\nДокстринг: Тест проверяет фильтрацию подразделений по департаменту.\n\nМетод: test_filter_subdivisions_by_date\nДокстринг: Тест проверяет фильтрацию подразделений по дате.\n"
+            }
+        },
+        {
+            "name": "Пример написания документации для кода с логикой",
+            "in_text": "\n```python\nimport json\nimport re\n\nfrom lib_re import RePromt\nfrom lib_types import (\n    PromtBasePromt,\n    PromtCodeBlock,\n    PromtHeder,\n    PromtMeta,\n    PromtToolsPromt,\n)\n\n\ndef parse_header_md_to_obj(promt_header: str) -> PromtHeder:\n    \"\"\"Распарсить главу с прмотом\"\"\"\n    # Убрать комментарии из текста\n    promt_header = RePromt.clear_comments.sub(\"\", promt_header)\n\n    name = RePromt.search_h1.search(promt_header)[\"name_promt\"].strip()\n    meta_raw = RePromt.meta_h2.search(promt_header)[\"meta_text\"].strip()\n    des = RePromt.des_h2.search(promt_header)[\"doc_text\"].strip()\n    base_promt_raw = RePromt.base_promt_h2.search(promt_header)[\n        \"base_promt_text\"\n    ].strip()\n    examples_raw = RePromt.examples_promt_h3.search(promt_header)[\n        \"examples_promt_text\"\n    ].strip()\n    tools_promt_raw = RePromt.tools_promt_h2.search(promt_header)[\n        \"tools_promt_text\"\n    ].strip()\n    ###\n    # meta_raw\n    #\n    meta_obj = {\n        m[\"key\"]: RePromt.md_list.findall(m[\"values\"])\n        for m in RePromt.meta_parse_body.finditer(meta_raw)\n    }\n    meta = PromtMeta(\n        for_=meta_obj.get(\"for\", tuple()),\n        use=meta_obj.get(\"use\", tuple()),\n        group=meta_obj.get(\"group\", tuple()),\n        tags=meta_obj.get(\"tags\", tuple()),\n    )\n    ###\n    #\n    # base_promt_raw\n    #\n    base_promt_obj = RePromt.promt_code_block.search(base_promt_raw)\n    base_promt = PromtBasePromt(\n        promt=PromtCodeBlock(\n            text_promt=base_promt_obj[\"code\"],\n            templates={\n                m[\"key\"]: m[\"value\"].strip()\n                for m in RePromt.md_dict.finditer(base_promt_obj[\"templates\"])\n            }\n            if base_promt_obj[\"templates\"]\n            else \"\",\n        ),\n        examples=tuple(\n            m[\"code\"] for m in RePromt.examples_code_block.finditer(examples_raw)\n        ),\n    )\n    ###\n    #\n    # tools_promt_raw\n    #\n    tools_promt = PromtToolsPromt(\n        promts=tuple(\n            PromtCodeBlock(\n                text_promt=m[\"code\"],\n                templates={\n                    m2[\"key\"]: m2[\"value\"].strip()\n                    for m2 in RePromt.md_dict.finditer(m[\"templates\"])\n                }\n                if m[\"templates\"]\n                else \"\",\n            )\n            for m in RePromt.promt_code_block.finditer(tools_promt_raw)\n        )\n    )\n\n    p = PromtHeder(\n        name=name, meta=meta, des=des, base_promt=base_promt, tools_promt=tools_promt\n    )\n\n    return p\n\n\ndef parse_promt_md_to_json(promt_text: str) -> str:\n    \"\"\"Распарсить весь Markdown файл с промтами\n    и вызвать для каждого промта функцию parse_header_md_to_obj\n\n    promt_text: Прмоты в Markdown формате\n    return: Промты в Json формате\n    \"\"\"\n\n    arr_promts: PromtHeder = []\n\n    h1_last: re.Match = None\n\n    for h1_now in RePromt.search_h1.finditer(promt_text):\n        h1_now: re.Match\n\n        if h1_last:\n            promt_header = promt_text[h1_last.span()[0] : h1_now.span()[0]]\n            arr_promts.append(parse_header_md_to_obj(promt_header))\n        h1_last = h1_now\n\n    if h1_last:\n        promt_header = promt_text[h1_last.span()[0] :]\n        arr_promts.append(parse_header_md_to_obj(promt_header))\n\n    r = json.dumps(arr_promts, ensure_ascii=False, indent=4)\n    return r\n```\n",
+            "out_text": {
+                "Пример 1": "\nФункция: parse_header_md_to_obj\nДокстринг: Распарсить раздел с промптом из Markdown и преобразовать его в объект.\n\nФункция: parse_promt_md_to_json\nДокстринг: Распарсить весь Markdown файл с промптами, вызвать для каждого промта функцию parse_header_md_to_obj и преобразовать результат в JSON формат."
+            }
+        }
+    ]
+}
