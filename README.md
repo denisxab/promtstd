@@ -72,7 +72,6 @@
         ├──Файл_С_Промтом_1.html
         ├──Файл_С_Промтом_2.html
         └──Файл_С_Промтом_3.html  
-
 ```
 
 Так как промпты могут быть объемными и иметь множество особенностей, мы решили не устанавливать строгие рамки для хранения промптов и вместо этого создать правила для структурирования заголовков, а также расширить возможности Markdown. Такой подход к стандарту предоставляет большой потенциал для хранения промптов в будущем.
@@ -257,12 +256,23 @@ python python -m promtstd json Файл_PromtStd_Markdown.md
 Пример `PromtStd.Markdown`:
 
 <pre>
-# base_promt
+# meta
+
+- for:
+  - ChatGPT
+- use:
+  - Первое сообщение
+- tags:
+  - Создание промтов
+
+# doc
 
 Этот промт нужен, для того чтобы вмести с CahtGpt найти самый лучший вариант промта под конкретную задачу.
 
-- После этого промта нужно описать под какую задачу вам нужно создать нвоый промт
+- После этого промта нужно описать под какую задачу вам нужно создать новый промт
 - После этого CahtGpt будет задавать уточняющие вопросы, на которые нам нужно ответить, для того чтобы улучшить новый промт
+
+# base_promt
 
 ```promt
 I want you to become my Prompt Creator. Your goal is to help me craft the best possible prompt for my needs. The prompt will be used by you, ChatGPT. You will follow the following process:
@@ -283,15 +293,75 @@ I want you to become my Prompt Creator. Your goal is to help me craft the best p
 ```promt
 Изначально Revised prompt равен:
 
-{{Указать_пример}}
+{{УказатьPromt}}
 ```
+
+- УказатьPromt ~ Обратите внимание чтобы этот прмот звучал утвердительно, а иначе CahtGpt подумает что это вопрос.
+  - Оптимизируй код на Python
+  - [x] Оптимизируй код на Си
+  - Оптимизируй код на Assembler
 
 ## Если нужно изменять промт на основание примеров
 
 ```promt
-Я хочу проверить работу Revised prompt, я буду давать смотреть на твой ответ и давать подсказки как можно улучшить Revised prompt. Для улучшения можно изменять правила Revised prompt. Вот пример который ты должен проверить:
+Я хочу проверить работу Revised prompt, я буду смотреть на твой ответ, и давать подсказки как можно улучшить Revised prompt.
+Для улучшения можно изменять правила Revised prompt.
 
-{{Указать_пример}}
+Вот пример который ты должен проверить:
+
+{{УказатьПример}}
+```
+
+# expl
+
+## Если отправить только промт первым сообщением
+
+```promt
+Разработка нейронных сетей на основе архитектуры трансформер
+```
+
+### Уточнения промта
+
+```ai
+Хорошо, вот три секции, которые помогут нам уточнить тему и создать лучший возможный промпт:
+
+a) Пересмотренный промпт:
+Напишите промпт, который вы хотели бы использовать для этой темы.
+
+b) Советы:
+Какие дополнительные детали или информацию нам нужно включить в промпт, чтобы он был более ясным и конкретным?
+
+c) Вопросы:
+Какие вопросы у вас есть относительно темы, которые помогут нам лучше понять, что должен включать наш промпт?
+```
+
+## Если отправить промт как изначальный
+
+```promt
+Изначально Revised prompt равен:
+
+Разработка нейронных сетей на основе архитектуры трансформер
+```
+
+### Готовый промт, а также вопросы по нему
+
+```ai
+Отлично, в таком случае давайте начнем:
+
+Revised prompt:
+Создание нейронных сетей с использованием трансформерной архитектуры.
+
+Suggestions:
+
+Какие применения будет иметь нейронная сеть, которую вы хотите создать?
+Какие специфические особенности трансформерной архитектуры вы планируете использовать?
+Какую информацию вы хотели бы получить от нейронной сети? Какие данные будут использоваться для обучения?
+Какие будут измерения успеха для нейронной сети, которую вы создадите?
+Questions:
+
+Какую среду для разработки нейронных сетей вы предпочитаете использовать?
+Какова ваша совокупная опытность в создании нейронных сетей и использовании трансформерной архитектуры?
+Какие примеры существующих нейронных сетей вы изучили и какие аспекты из них вы хотели бы использовать в своей сети?
 ```
 </pre>
 
@@ -300,11 +370,23 @@ I want you to become my Prompt Creator. Your goal is to help me craft the best p
 ```json
 {
     "name": "Создание промтов вместе с ChatGpt.md",
-    "meta": null,
-    "doc": null,
+    "meta": {
+        "for_": [
+            "ChatGPT"
+        ],
+        "use": [
+            "Первое сообщение"
+        ],
+        "group": "examples",
+        "tags": [
+            "Создание промтов"
+        ],
+        "version": null
+    },
+    "doc": "Этот промт нужен, для того чтобы вмести с CahtGpt найти самый лучший вариант промта под конкретную задачу.\n\n- После этого промта нужно описать под какую задачу вам нужно создать новый промт\n- После этого CahtGpt будет задавать уточняющие вопросы, на которые нам нужно ответить, для того чтобы улучшить новый промт",
     "base_promt": {
         "promt": {
-            "text_promt": "I want you to become my Prompt Creator. Your goal is to help me craft the best possible prompt for my needs. The prompt will be used by you, ChatGPT. You will follow the following process:\n\n1. Your first response will be to ask me what the prompt should be about. I will provide my answer, but we will need to improve it through continual iterations by going through the next steps.\n\n2. Based on my input, you will generate 3 sections. a) Revised prompt (provide your rewritten prompt. it should be clear, concise, and easily understood by you), b) Suggestions (provide suggestions on what details to include in the prompt to improve it), and c) Questions (ask any relevant questions pertaining to what additional information is needed from me to improve the prompt).\n\n3. We will continue this iterative process with me providing additional information to you and you updating the prompt in the Revised prompt section until it's complete.\n\nЗадавай мне вопросы и пиши ответы на русском языке",
+            "text_promt": "I want you to become my Prompt Creator. Your goal is to help me craft the best possible prompt for my needs. The prompt will be used by you, ChatGPT. You will follow the following process:\n\n1. Your first response will be to ask me what the prompt should be about. I will provide my answer, but we will need to improve it through continual iterations by going through the next steps.\n\n2. Based on my input, you will generate 3 sections. a) Revised prompt (provide your rewritten prompt. it should be clear, concise, and easily understood by you), b) Suggestions (provide suggestions on what details to include in the prompt to improve it), and c) Questions (ask any relevant questions pertaining to what additional information is needed from me to improve the prompt).\n\n3. We will continue this iterative process with me providing additional information to you and you updating the prompt in the Revised prompt section until it's complete.\n\nЗадавай мне вопросы и пиши ответы на русском языке.",
             "vars": []
         }
     },
@@ -312,22 +394,26 @@ I want you to become my Prompt Creator. Your goal is to help me craft the best p
         "promts": [
             {
                 "about_promt": "Если нужно модифицировать уже существующий промт, то напишите 2 сообщением",
-                "text_promt": "Изначально Revised prompt равен: \n\n{{Указать_пример}}",
+                "text_promt": "Изначально Revised prompt равен:\n\n{{УказатьPromt}}",
                 "vars": [
                     {
-                        "name": "Указать_пример",
-                        "doc": null,
-                        "default": null,
-                        "allowed": null
+                        "name": "УказатьPromt",
+                        "doc": " Обратите внимание чтобы этот прмот звучал утвердительно, а иначе CahtGpt подумает что это вопрос.",
+                        "default": "Оптимизируй код на Си",
+                        "allowed": [
+                            "Оптимизируй код на Python",
+                            "Оптимизируй код на Си",
+                            "Оптимизируй код на Assembler"
+                        ]
                     }
                 ]
             },
             {
                 "about_promt": "Если нужно изменять промт на основание примеров",
-                "text_promt": "Я хочу проверить работу Revised prompt, я буду давать смотреть на твой ответ и давать подсказки как можно улучшить Revised prompt. Для улучшения можно изменять правила Revised prompt. Вот пример который ты должен проверить:\n\n{{Указать_пример}}",
+                "text_promt": "Я хочу проверить работу Revised prompt, я буду смотреть на твой ответ, и давать подсказки как можно улучшить Revised prompt. \nДля улучшения можно изменять правила Revised prompt.\n\nВот пример который ты должен проверить:\n\n{{УказатьПример}}",
                 "vars": [
                     {
-                        "name": "Указать_пример",
+                        "name": "УказатьПример",
                         "doc": null,
                         "default": null,
                         "allowed": null
@@ -336,7 +422,22 @@ I want you to become my Prompt Creator. Your goal is to help me craft the best p
             }
         ]
     },
-    "expl": null
+    "expl": [
+        {
+            "name": "Если отправить только промт первым сообщением",
+            "in_text": "\n```promt\nРазработка нейронных сетей на основе архитектуры трансформер\n```\n",
+            "out_text": {
+                "Уточнения промта": "\n```ai\nХорошо, вот три секции, которые помогут нам уточнить тему и создать лучший возможный промпт:\n\na) Пересмотренный промпт:\nНапишите промпт, который вы хотели бы использовать для этой темы.\n\nb) Советы:\nКакие дополнительные детали или информацию нам нужно включить в промпт, чтобы он был более ясным и конкретным?\n\nc) Вопросы:\nКакие вопросы у вас есть относительно темы, которые помогут нам лучше понять, что должен включать наш промпт?\n```\n"
+            }
+        },
+        {
+            "name": "Если отправить промт как изначальный",
+            "in_text": "\n```promt\nИзначально Revised prompt равен:\n\nРазработка нейронных сетей на основе архитектуры трансформер\n```\n",
+            "out_text": {
+                "Готовый промт, а также вопросы по нему": "\n```ai\nОтлично, в таком случае давайте начнем:\n\nRevised prompt:\nСоздание нейронных сетей с использованием трансформерной архитектуры.\n\nSuggestions:\n\nКакие применения будет иметь нейронная сеть, которую вы хотите создать?\nКакие специфические особенности трансформерной архитектуры вы планируете использовать?\nКакую информацию вы хотели бы получить от нейронной сети? Какие данные будут использоваться для обучения?\nКакие будут измерения успеха для нейронной сети, которую вы создадите?\nQuestions:\n\nКакую среду для разработки нейронных сетей вы предпочитаете использовать?\nКакова ваша совокупная опытность в создании нейронных сетей и использовании трансформерной архитектуры?\nКакие примеры существующих нейронных сетей вы изучили и какие аспекты из них вы хотели бы использовать в своей сети?\n```"
+            }
+        }
+    ]
 }
 ```
 
@@ -353,6 +454,8 @@ python python -m promtstd html Файл_PromtStd_Markdown.md
 ```
 
 #### Пример сборки
+
+[Создание промтов вместе с ChatGpt.html](https://github.com/denisxab/promtstd/blob/main/examples/html/%D0%A1%D0%BE%D0%B7%D0%B4%D0%B0%D0%BD%D0%B8%D0%B5%20%D0%BF%D1%80%D0%BE%D0%BC%D1%82%D0%BE%D0%B2%20%D0%B2%D0%BC%D0%B5%D1%81%D1%82%D0%B5%20%D1%81%20ChatGpt.html)
 
 ![to_html](./docs/_static/Screenshot_20230411_004511.png)
 
