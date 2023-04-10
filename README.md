@@ -214,11 +214,9 @@
 
 </pre>
 
-## Сборка PromtStd.Markdown в PromtStd.Json
+## Сборка PromtStd.Markdown в другие форматы
 
-Чтобы использовать данные из `Markdown` в других приложениях, в стандарте `promtstd`, предусмотрена сборка с `Json`.
-
-### Команда для сборки
+### Установка promtstd
 
 Установка `promtstd`
 
@@ -226,13 +224,19 @@
 pip install promtstd
 ```
 
+### В ~ PromtStd.Json
+
+Чтобы использовать данные из `Markdown` в других приложениях, в стандарте `promtstd`, предусмотрена сборка с `Json`.
+
+#### Команда для сборки
+
 Сборка `PromtStd.Markdown` в `PromtStd.Json`
 
 ```bash
-python python -m promtstd Файл_PromtStd_Markdown.md 
+python python -m promtstd json Файл_PromtStd_Markdown.md 
 ```
 
-### Пример сборки
+#### Пример сборки
 
 Пример `PromtStd.Markdown`:
 
@@ -319,6 +323,22 @@ I want you to become my Prompt Creator. Your goal is to help me craft the best p
     "expl": null
 }
 ```
+
+### В ~ PromtStd.Html
+
+Для того чтобы использовать дополнительные возможности `PromtStd.Markdown`, и работать с промтом прямо в браузере, нужно собрать `PromtStd.Html`
+
+#### Команда для сборки
+
+Сборка `PromtStd.Markdown` в `PromtStd.Html`
+
+```bash
+python python -m promtstd html Файл_PromtStd_Markdown.md 
+```
+
+#### ! Пример сборки
+
+...
 
 ## Вывод
 

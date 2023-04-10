@@ -39,6 +39,8 @@ class StatusWarning(StatusPromtStd):
 class StatusSuccess(StatusPromtStd):
     end_compilation_json = "Конец компиляции в json"
     save_to_json_file = "Сохранение в файл json"
+    end_compilation_html = "Конец компиляции в html"
+    save_to_json_html = "Сохранение в файл html"
 
     def log_level():
         return "SUCCESS"
@@ -49,6 +51,7 @@ class StatusSuccess(StatusPromtStd):
 
 class StatusError(StatusPromtStd):
     file_no_suffix_md = "Переданный файл не имеет расширение `.md`"
+    not_allowed_type_to_build = "Недопустимый тим для сборки"
 
     def log_level():
         return "ERROR"

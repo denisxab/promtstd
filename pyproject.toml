@@ -28,6 +28,9 @@ keywords=[
 
 [tool.poetry.dependencies]
 python = "^3.9"
+markdown = "^3.4.3"
+pymdown-extensions = "^9.11"
+pygments = "^2.15.0"
 
 
 [tool.poetry.group.dev.dependencies]

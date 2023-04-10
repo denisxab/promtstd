@@ -12,6 +12,15 @@ class JsonText:
         self.text = dumps(promts, ensure_ascii=False, indent=4)
 
 
+class HTMLText:
+    """
+    Представляет текст в формате HTML.
+    """
+
+    def __init__(self, promts) -> None:
+        self.text = promts
+
+
 class PromtMeta(OrderedDict):
     """Мета информация об промте"""
 
