@@ -34,7 +34,9 @@ def main(to_build: Literal["json", "html"] = None, file: Optional[str] = None):
         r = ParserPromtStdToJson(file_md).parse_file_promt_md_to_json()
         logLinter(StatusSuccess.end_compilation_json, where_event=file_md)
 
-        path_out_file_promt = file_md.with_suffix(".json")
+        file_md = file_md.parent / f"_{file_md.name}.json"
+
+        path_out_file_promt = file_md
 
         path_out_file_promt.write_text(r.text)
         logLinter(StatusSuccess.save_to_json_file, where_event=file_md)
@@ -43,7 +45,9 @@ def main(to_build: Literal["json", "html"] = None, file: Optional[str] = None):
         r = ParserPromtStdToHTML(file_md).parse_file_promt_md_to_html()
         logLinter(StatusSuccess.end_compilation_html, where_event=file_md)
 
-        path_out_file_promt = file_md.with_suffix(".html")
+        file_md = file_md.parent / f"_{file_md.name}.html"
+
+        path_out_file_promt = file_md
 
         path_out_file_promt.write_text(r.text)
         logLinter(StatusSuccess.save_to_json_html, where_event=file_md)
@@ -65,5 +69,3 @@ if __name__ == "__main__":
     main(to_build, pt / "Оптимизация кода.md")
     main(to_build, pt / "Написать программу на Python.md")
     main(to_build, pt / "Создание промтов вместе с ChatGpt.md")
-
-    ...

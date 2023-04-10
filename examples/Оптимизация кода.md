@@ -1,4 +1,3 @@
-
 # base_promt
 
 ```promt

@@ -2,11 +2,12 @@ import sys
 from pathlib import Path
 
 import pytest
+
 from utils import get_file_hash
 
 sys.path.insert(0, str(Path(__file__).parent.parent))
 
-from lib_main import ParserPromtStd
+from lib_to_json import ParserPromtStdToJson
 
 pin = Path(__file__).parent.parent.parent / "examples"
 
@@ -16,7 +17,7 @@ pin = Path(__file__).parent.parent.parent / "examples"
     [
         (
             Path("Генерация кода на Python.md"),
-            "0c691a5e984f2cc920fbbd7c9c8b3c6f37017ee85e62083466b3e76c30dc7c90",
+            "b750e2b8be69fce810051c369638653e260c7187f91f1d4eac63fda7c4a3aac2",
             "4bed2261583a0fd8dfec0abf1065903bddd5d07f59a1d88d493829840fbfa7f7",
         ),
         (
@@ -31,12 +32,12 @@ pin = Path(__file__).parent.parent.parent / "examples"
         ),
         (
             Path("Написание README большому проекту.md"),
-            "639efae3c225e19010871d87f9a4e4aaf54b9215215d3b6e985e2acbfdb66897",
+            "66e2268fdb2c99992cf287b3419b9623858a7f13ab3087ebfd585d48506d61b4",
             "373c0ff9bbea695bce0efb48f84eff4337731daa94e9c0b324c61458cc9e291e",
         ),
         (
             Path("Написать программу на Python.md"),
-            "16d759c4861baaf145f01c0557a001fa813532cd5e1e780ef372d96f7d2646b2",
+            "49ab111fe296b0fa0ac700bfb678c9c24aff2f58f436ceb4a4e8b75244813891",
             "bc5b2707b03165d4d3e427beb1eebaef6796e2a7ca6a2190050d3738d8dbae10",
         ),
         (
@@ -63,6 +64,8 @@ def test_parse_promt_md_to_json(file_in: Path, hash_in: str, hash_out: str):
     assert get_file_hash(path_to_file_promt) == hash_in
     assert get_file_hash(path_out_file_promt) == hash_out
 
-    req = ParserPromtStd(select_file=path_to_file_promt).parse_file_promt_md_to_json()
+    req = ParserPromtStdToJson(
+        select_file=path_to_file_promt
+    ).parse_file_promt_md_to_json()
 
     assert req.text == path_out_file_promt.read_text()
