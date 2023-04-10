@@ -1,4 +1,3 @@
-
 # doc
 
 Оптимальным решением для экономии слов при работе с ChatGPT является использование docstring и аннотаций аргументов в классах и функциях.
@@ -6,13 +5,13 @@
 1. Генерируем документацию проекта с помощью Sphinx
    1. Установка `sphinx`
 
-      ```promt
+      ```bash
       pip install sphinx sphinx_rtd_theme;
       ```
 
    2. Создание структуры документации `sphinx`
 
-      ```promt
+      ```bash
       mkdir docs
       cd docs
       #Инициализация проекта
@@ -21,7 +20,7 @@
 
    3. Заменить содержимое файла `./docs/source/conf.py` на следующее:
 
-      ```promt
+      ```python
       import sys
       import pathlib
 
@@ -42,7 +41,7 @@
 
    4. Добавить в файл `./docs/source/index.rst` модули, которые должны быть включены в документацию:
 
-      ```promt
+      ```txt
       .. toctree::
          :maxdepth: 2
          :caption: Contents:
@@ -57,7 +56,7 @@
 
    5. Собираем `./docs/docs/build/html/index.html`
 
-      ```promt
+      ```bash
       make html   
       ```
 
@@ -67,7 +66,7 @@
    sudo apt install lynx
    ```
 
-   ```promt
+   ```bash
    lynx -dump ./docs/build/html/index.html > ./docs/build/html/index.txt 
    ```
 

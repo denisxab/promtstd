@@ -59,11 +59,11 @@ if __name__ == "__main__":
     to_build = "html"
     pt = Path(__file__).parent.parent / "examples"
     main(to_build, pt / "Генерация кода на Python.md")
-    # main(to_build, pt / "Документирование кода.md")
-    # main(to_build, pt / "Изучение новой темы в IT.md")
-    # main(to_build, pt / "Написание README большому проекту.md")
-    # main(to_build, pt / "Оптимизация кода.md")
-    # main(to_build, pt / "Написать программу на Python.md")
-    # main(to_build, pt / "Создание промтов вместе с ChatGpt.md")
+    main(to_build, pt / "Документирование кода.md")
+    main(to_build, pt / "Изучение новой темы в IT.md")
+    main(to_build, pt / "Написание README большому проекту.md")
+    main(to_build, pt / "Оптимизация кода.md")
+    main(to_build, pt / "Написать программу на Python.md")
+    main(to_build, pt / "Создание промтов вместе с ChatGpt.md")
 
     ...

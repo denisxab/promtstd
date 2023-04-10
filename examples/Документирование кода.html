@@ -8,182 +8,51 @@
 <body>
     <div class="markdown-body">
         <div class="toc"><span class="toctitle">Оглавление</span><ul>
-<li><a href="#meta">meta</a></li>
-<li><a href="#doc">doc</a></li>
 <li><a href="#base_promt">base_promt</a></li>
-<li><a href="#tools">tools</a></li>
 <li><a href="#expl">expl</a><ul>
-<li><a href="#_1">Пример написание документация для тестов</a><ul>
-<li><a href="#1">Пример 1</a></li>
-<li><a href="#2">Пример 2</a></li>
-</ul>
-</li>
-<li><a href="#_2">Пример написания документации для кода с логикой</a><ul>
-<li><a href="#1_1">Пример 1</a></li>
+<li><a href="#lib_mainpy">Пример документирования lib_main.py</a><ul>
+<li><a href="#1">1</a></li>
 </ul>
 </li>
 </ul>
 </li>
 </ul>
 </div>
-<h1 id="meta">meta</h1>
-<ul>
-<li>for:<ul>
-<li>ChatGPT</li>
-</ul>
-</li>
-<li>use:<ul>
-<li>Первое сообщение</li>
-</ul>
-</li>
-<li>tags:<ul>
-<li>Python</li>
-<li>Code</li>
-</ul>
-</li>
-</ul>
-<h1 id="doc">doc</h1>
-<p>Этот промт используется для написание документации к коду. В частности для языка программирования Python</p>
 <h1 id="base_promt">base_promt</h1>
-<div class="highlight"><pre><span></span><code>Напиши докстригки к этому {ЧемуДокументация}. В ответ отправь только имя класса/метода и его докстринг:
+<div class="highlight"><pre><span></span><code>Напиши докстригки к классам и к его методам. В ответ отправь только имя класса/метода и его докстринг, отправляй это ввиде код блока:
 
-{{CODE}}
+{{КОД}}
 </code></pre></div>
-<ul>
-<li>CODE ~ Код которому нужно написать документацию</li>
-<li>ЧемуДокументация ~ К чему нужно писать документацию<ul>
-<li>Класс</li>
-<li>Метод</li>
-<li>[x] Класс и метод</li>
-<li>Атрибуты</li>
-</ul>
-</li>
-</ul>
-<h1 id="tools">tools</h1>
-<p>Тут будет список вспомогательных промтов. Например которые логично использовать совместно с основным промтом</p>
-<div class="highlight"><pre><span></span><code>Продолжи свой ответ, с того места где ты закончил прошлый
-</code></pre></div>
-<div class="highlight"><pre><span></span><code>Напиши снова главу: {{ИмяГлавы}}
-</code></pre></div>
-<ul>
-<li>ИмяГлавы ~ Название главы</li>
-</ul>
 <h1 id="expl">expl</h1>
-<h2 id="_1">Пример написание документация для тестов</h2>
-<div class="highlight"><pre><span></span><code><span class="k">class</span> <span class="nc">SubdivisionSearchApiViewTests</span><span class="p">(</span><span class="n">APITestCaseAuthorization</span><span class="p">):</span>
-    <span class="k">def</span> <span class="nf">setUp</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">setUp</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">url</span> <span class="o">=</span> <span class="n">reverse</span><span class="p">(</span><span class="s2">&quot;subdivisionsearch&quot;</span><span class="p">)</span>
+<h2 id="lib_mainpy">Пример документирования lib_main.py</h2>
+<div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">parse_promt_code_block_template</span><span class="p">(</span><span class="n">text</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+    <span class="n">res</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="n">RePromt</span><span class="o">.</span><span class="n">promt_code_block_template</span><span class="o">.</span><span class="n">finditer</span><span class="p">(</span><span class="n">text</span><span class="p">):</span>
+        <span class="n">name</span> <span class="o">=</span> <span class="n">m</span><span class="p">[</span><span class="s2">&quot;name&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+        <span class="n">doc</span> <span class="o">=</span> <span class="n">m</span><span class="p">[</span><span class="s2">&quot;doc&quot;</span><span class="p">]</span>
+        <span class="n">allowed</span> <span class="o">=</span> <span class="n">RePromt</span><span class="o">.</span><span class="n">md_list</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="n">m</span><span class="p">[</span><span class="s2">&quot;defualts&quot;</span><span class="p">])</span>
+        <span class="n">default</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="k">for</span> <span class="n">n</span><span class="p">,</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">allowed</span><span class="p">):</span>
+            <span class="n">q</span> <span class="o">=</span> <span class="n">i</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+            <span class="k">if</span> <span class="n">q</span> <span class="ow">and</span> <span class="n">q</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s2">&quot;+&quot;</span><span class="p">):</span>
+                <span class="n">n_q</span> <span class="o">=</span> <span class="n">q</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+                <span class="n">allowed</span><span class="p">[</span><span class="n">n</span><span class="p">]</span> <span class="o">=</span> <span class="n">n_q</span>
+                <span class="n">default</span> <span class="o">=</span> <span class="n">n_q</span>
+                <span class="k">break</span>
 
-    <span class="k">def</span> <span class="nf">test_list_subdivisions</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="n">response</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">url</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">status_code</span><span class="p">,</span> <span class="n">status</span><span class="o">.</span><span class="n">HTTP_200_OK</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;results&quot;</span><span class="p">]),</span> <span class="mi">2</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span>
-            <span class="n">response</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;results&quot;</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span> <span class="n">SubdivisionSerializer</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">subdivision</span><span class="p">)</span><span class="o">.</span><span class="n">data</span>
+        <span class="n">res</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+            <span class="n">PromtCodeBlockTemplates</span><span class="p">(</span>
+                <span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">,</span>
+                <span class="n">doc</span><span class="o">=</span><span class="n">doc</span><span class="p">,</span>
+                <span class="n">default</span><span class="o">=</span><span class="n">default</span><span class="p">,</span>
+                <span class="n">defualts</span><span class="o">=</span><span class="n">allowed</span><span class="p">,</span>
+            <span class="p">)</span>
         <span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span>
-            <span class="n">response</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;results&quot;</span><span class="p">][</span><span class="mi">1</span><span class="p">],</span> <span class="n">SubdivisionSerializer</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">subdivision2</span><span class="p">)</span><span class="o">.</span><span class="n">data</span>
-        <span class="p">)</span>
-
-    <span class="k">def</span> <span class="nf">test_create_subdivision</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="n">new_data</span> <span class="o">=</span> <span class="p">{</span>
-            <span class="s2">&quot;department&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">department</span><span class="o">.</span><span class="n">id</span><span class="p">,</span>
-            <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;Отделение 3&quot;</span><span class="p">,</span>
-            <span class="s2">&quot;start_date&quot;</span><span class="p">:</span> <span class="s2">&quot;2023-03-01&quot;</span><span class="p">,</span>
-        <span class="p">}</span>
-        <span class="n">response</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">url</span><span class="p">,</span> <span class="n">new_data</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">status_code</span><span class="p">,</span> <span class="n">status</span><span class="o">.</span><span class="n">HTTP_201_CREATED</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="n">Subdivision</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">new_data</span><span class="p">[</span><span class="s2">&quot;name&quot;</span><span class="p">])</span><span class="o">.</span><span class="n">exists</span><span class="p">())</span>
-
-    <span class="k">def</span> <span class="nf">test_filter_subdivisions_by_department</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="n">response</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">url</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">status_code</span><span class="p">,</span> <span class="n">status</span><span class="o">.</span><span class="n">HTTP_200_OK</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;results&quot;</span><span class="p">]),</span> <span class="mi">2</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span>
-            <span class="n">response</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;results&quot;</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span> <span class="n">SubdivisionSerializer</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">subdivision</span><span class="p">)</span><span class="o">.</span><span class="n">data</span>
-        <span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span>
-            <span class="n">response</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;results&quot;</span><span class="p">][</span><span class="mi">1</span><span class="p">],</span> <span class="n">SubdivisionSerializer</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">subdivision2</span><span class="p">)</span><span class="o">.</span><span class="n">data</span>
-        <span class="p">)</span>
-
-    <span class="k">def</span> <span class="nf">test_filter_subdivisions_by_date</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="n">response</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">url</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">status_code</span><span class="p">,</span> <span class="n">status</span><span class="o">.</span><span class="n">HTTP_200_OK</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;results&quot;</span><span class="p">]),</span> <span class="mi">2</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span>
-            <span class="n">response</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;results&quot;</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span> <span class="n">SubdivisionSerializer</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">subdivision</span><span class="p">)</span><span class="o">.</span><span class="n">data</span>
-        <span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span>
-            <span class="n">response</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;results&quot;</span><span class="p">][</span><span class="mi">1</span><span class="p">],</span> <span class="n">SubdivisionSerializer</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">subdivision2</span><span class="p">)</span><span class="o">.</span><span class="n">data</span>
-        <span class="p">)</span>
-</code></pre></div>
-<h3 id="1">Пример 1</h3>
-<p>Класс: SubdivisionSearchApiViewTests</p>
-<p>Докстринг класса:<br>
-Тесты для представления API поиска подразделений</p>
-<p>Метод: setUp</p>
-<p>Докстринг метода:<br>
-Переопределение метода setUp для настройки тестового окружения</p>
-<p>Метод: test_list_subdivisions</p>
-<p>Докстринг метода:<br>
-Тест для проверки получения списка подразделений</p>
-<p>Метод: test_create_subdivision</p>
-<p>Докстринг метода:<br>
-Тест для проверки создания нового подразделения</p>
-<p>Метод: test_filter_subdivisions_by_department</p>
-<p>Докстринг метода:<br>
-Тест для проверки фильтрации подразделений по отделу</p>
-<p>Метод: test_filter_subdivisions_by_date</p>
-<p>Докстринг метода:<br>
-Тест для проверки фильтрации подразделений по дате</p>
-<h3 id="2">Пример 2</h3>
-<p>Класс: SubdivisionSearchApiViewTests<br>
-Докстринг: Класс для тестирования API поиска подразделений.</p>
-<p>Метод: setUp<br>
-Докстринг: Настраивает тестовый случай перед каждым тестом.</p>
-<p>Метод: test_list_subdivisions<br>
-Докстринг: Тест проверяет получение списка всех подразделений.</p>
-<p>Метод: test_create_subdivision<br>
-Докстринг: Тест проверяет создание нового подразделения.</p>
-<p>Метод: test_filter_subdivisions_by_department<br>
-Докстринг: Тест проверяет фильтрацию подразделений по департаменту.</p>
-<p>Метод: test_filter_subdivisions_by_date<br>
-Докстринг: Тест проверяет фильтрацию подразделений по дате.</p>
-<h2 id="_2">Пример написания документации для кода с логикой</h2>
-<div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">json</span>
-<span class="kn">import</span> <span class="nn">re</span>
-
-<span class="kn">from</span> <span class="nn">lib_re</span> <span class="kn">import</span> <span class="n">RePromt</span>
-<span class="kn">from</span> <span class="nn">lib_types</span> <span class="kn">import</span> <span class="p">(</span>
-    <span class="n">PromtBasePromt</span><span class="p">,</span>
-    <span class="n">PromtCodeBlock</span><span class="p">,</span>
-    <span class="n">PromtHeder</span><span class="p">,</span>
-    <span class="n">PromtMeta</span><span class="p">,</span>
-    <span class="n">PromtToolsPromt</span><span class="p">,</span>
-<span class="p">)</span>
+    <span class="k">return</span> <span class="n">res</span>
 
 
-<span class="k">def</span> <span class="nf">parse_header_md_to_obj</span><span class="p">(</span><span class="n">promt_header</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span>    <span class="o">-&gt;</span> <span class="n">PromtHeder</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Распарсить главу с прмотом&quot;&quot;&quot;</span>
-    <span class="c1"># Убрать комментарии из текста</span>
-    <span class="n">promt_header</span> <span class="o">=</span> <span class="n">RePromt</span><span class="o">.</span><span class="n">clear_comments</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">promt_header</span><span class="p">)</span>
-
-    <span class="n">name</span> <span class="o">=</span> <span class="n">RePromt</span><span class="o">.</span><span class="n">search_h1</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">promt_header</span><span class="p">)[</span><span class="s2">&quot;name_promt&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
-    <span class="n">meta_raw</span> <span class="o">=</span> <span class="n">RePromt</span><span class="o">.</span><span class="n">meta_h2</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">promt_header</span><span class="p">)[</span><span class="s2">&quot;meta_text&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
-    <span class="n">des</span> <span class="o">=</span> <span class="n">RePromt</span><span class="o">.</span><span class="n">des_h2</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">promt_header</span><span class="p">)[</span><span class="s2">&quot;doc_text&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
-    <span class="n">base_promt_raw</span> <span class="o">=</span> <span class="n">RePromt</span><span class="o">.</span><span class="n">base_promt_h2</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">promt_header</span><span class="p">)[</span>
-        <span class="s2">&quot;base_promt_text&quot;</span>
-    <span class="p">]</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
-    <span class="n">examples_raw</span> <span class="o">=</span> <span class="n">RePromt</span><span class="o">.</span><span class="n">examples_promt_h3</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">promt_header</span><span class="p">)[</span>
-        <span class="s2">&quot;examples_promt_text&quot;</span>
-    <span class="p">]</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
-    <span class="n">tools_promt_raw</span> <span class="o">=</span> <span class="n">RePromt</span><span class="o">.</span><span class="n">tools_promt_h2</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">promt_header</span><span class="p">)[</span>
-        <span class="s2">&quot;tools_promt_text&quot;</span>
-    <span class="p">]</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
-    <span class="c1">###</span>
-    <span class="c1"># meta_raw</span>
-    <span class="c1">#</span>
+<span class="k">def</span> <span class="nf">parse_meta</span><span class="p">(</span><span class="n">promt_group</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">promt_text</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span>    <span class="o">-&gt;</span> <span class="n">PromtMeta</span><span class="p">:</span>
+    <span class="n">meta_raw</span> <span class="o">=</span> <span class="n">RePromt</span><span class="o">.</span><span class="n">meta_h1</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">promt_text</span><span class="p">)[</span><span class="s2">&quot;meta_text&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
     <span class="n">meta_obj</span> <span class="o">=</span> <span class="p">{</span>
         <span class="n">m</span><span class="p">[</span><span class="s2">&quot;key&quot;</span><span class="p">]:</span> <span class="n">RePromt</span><span class="o">.</span><span class="n">md_list</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="n">m</span><span class="p">[</span><span class="s2">&quot;values&quot;</span><span class="p">])</span>
         <span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="n">RePromt</span><span class="o">.</span><span class="n">meta_parse_body</span><span class="o">.</span><span class="n">finditer</span><span class="p">(</span><span class="n">meta_raw</span><span class="p">)</span>
@@ -191,86 +60,187 @@
     <span class="n">meta</span> <span class="o">=</span> <span class="n">PromtMeta</span><span class="p">(</span>
         <span class="n">for_</span><span class="o">=</span><span class="n">meta_obj</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;for&quot;</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">()),</span>
         <span class="n">use</span><span class="o">=</span><span class="n">meta_obj</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;use&quot;</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">()),</span>
-        <span class="n">group</span><span class="o">=</span><span class="n">meta_obj</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;group&quot;</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">()),</span>
+        <span class="n">group</span><span class="o">=</span><span class="n">promt_group</span><span class="p">,</span>
         <span class="n">tags</span><span class="o">=</span><span class="n">meta_obj</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;tags&quot;</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">()),</span>
     <span class="p">)</span>
-    <span class="c1">###</span>
-    <span class="c1">#</span>
-    <span class="c1"># base_promt_raw</span>
-    <span class="c1">#</span>
+    <span class="k">return</span> <span class="n">meta</span>
+
+
+<span class="k">def</span> <span class="nf">parse_base_promt</span><span class="p">(</span><span class="n">promt_text</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span>    <span class="o">-&gt;</span> <span class="n">PromtBasePromt</span><span class="p">:</span>
+    <span class="n">base_promt_raw</span> <span class="o">=</span> <span class="n">RePromt</span><span class="o">.</span><span class="n">base_promt_h1</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">promt_text</span><span class="p">)[</span><span class="s2">&quot;base_promt_text&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
     <span class="n">base_promt_obj</span> <span class="o">=</span> <span class="n">RePromt</span><span class="o">.</span><span class="n">promt_code_block</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">base_promt_raw</span><span class="p">)</span>
+
+    <span class="n">promt_code_block_templates</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="n">parse_promt_code_block_template</span><span class="p">(</span><span class="n">base_promt_obj</span><span class="p">[</span><span class="s2">&quot;templates&quot;</span><span class="p">])</span>
+        <span class="k">if</span> <span class="n">base_promt_obj</span><span class="p">[</span><span class="s2">&quot;templates&quot;</span><span class="p">]</span>
+        <span class="k">else</span> <span class="p">[]</span>
+    <span class="p">)</span>
+
     <span class="n">base_promt</span> <span class="o">=</span> <span class="n">PromtBasePromt</span><span class="p">(</span>
         <span class="n">promt</span><span class="o">=</span><span class="n">PromtCodeBlock</span><span class="p">(</span>
             <span class="n">text_promt</span><span class="o">=</span><span class="n">base_promt_obj</span><span class="p">[</span><span class="s2">&quot;code&quot;</span><span class="p">],</span>
-            <span class="n">templates</span><span class="o">=</span><span class="p">{</span>
-                <span class="n">m</span><span class="p">[</span><span class="s2">&quot;key&quot;</span><span class="p">]:</span> <span class="n">m</span><span class="p">[</span><span class="s2">&quot;value&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
-                <span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="n">RePromt</span><span class="o">.</span><span class="n">md_dict</span><span class="o">.</span><span class="n">finditer</span><span class="p">(</span><span class="n">base_promt_obj</span><span class="p">[</span><span class="s2">&quot;templates&quot;</span><span class="p">])</span>
-            <span class="p">}</span>
-            <span class="k">if</span> <span class="n">base_promt_obj</span><span class="p">[</span><span class="s2">&quot;templates&quot;</span><span class="p">]</span>
-            <span class="k">else</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
-        <span class="p">),</span>
-        <span class="n">examples</span><span class="o">=</span><span class="nb">tuple</span><span class="p">(</span>
-            <span class="n">m</span><span class="p">[</span><span class="s2">&quot;code&quot;</span><span class="p">]</span> <span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="n">RePromt</span><span class="o">.</span><span class="n">examples_code_block</span><span class="o">.</span><span class="n">finditer</span><span class="p">(</span><span class="n">examples_raw</span><span class="p">)</span>
-        <span class="p">),</span>
+            <span class="n">templates</span><span class="o">=</span><span class="n">promt_code_block_templates</span><span class="p">,</span>
+        <span class="p">)</span>
     <span class="p">)</span>
-    <span class="c1">###</span>
-    <span class="c1">#</span>
-    <span class="c1"># tools_promt_raw</span>
-    <span class="c1">#</span>
+
+    <span class="k">return</span> <span class="n">base_promt</span>
+
+
+<span class="k">def</span> <span class="nf">parse_tools_promt</span><span class="p">(</span><span class="n">promt_text</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span>    <span class="o">-&gt;</span> <span class="n">PromtToolsPromt</span><span class="p">:</span>
+    <span class="n">tools_promt_raw</span> <span class="o">=</span> <span class="n">RePromt</span><span class="o">.</span><span class="n">tools_promt_h1</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">promt_text</span><span class="p">)[</span>
+        <span class="s2">&quot;tools_promt_text&quot;</span>
+    <span class="p">]</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
     <span class="n">tools_promt</span> <span class="o">=</span> <span class="n">PromtToolsPromt</span><span class="p">(</span>
         <span class="n">promts</span><span class="o">=</span><span class="nb">tuple</span><span class="p">(</span>
             <span class="n">PromtCodeBlock</span><span class="p">(</span>
                 <span class="n">text_promt</span><span class="o">=</span><span class="n">m</span><span class="p">[</span><span class="s2">&quot;code&quot;</span><span class="p">],</span>
-                <span class="n">templates</span><span class="o">=</span><span class="p">{</span>
-                    <span class="n">m2</span><span class="p">[</span><span class="s2">&quot;key&quot;</span><span class="p">]:</span> <span class="n">m2</span><span class="p">[</span><span class="s2">&quot;value&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
-                    <span class="k">for</span> <span class="n">m2</span> <span class="ow">in</span> <span class="n">RePromt</span><span class="o">.</span><span class="n">md_dict</span><span class="o">.</span><span class="n">finditer</span><span class="p">(</span><span class="n">m</span><span class="p">[</span><span class="s2">&quot;templates&quot;</span><span class="p">])</span>
-                <span class="p">}</span>
+                <span class="n">templates</span><span class="o">=</span><span class="n">parse_promt_code_block_template</span><span class="p">(</span><span class="n">m</span><span class="p">[</span><span class="s2">&quot;templates&quot;</span><span class="p">])</span>
                 <span class="k">if</span> <span class="n">m</span><span class="p">[</span><span class="s2">&quot;templates&quot;</span><span class="p">]</span>
-                <span class="k">else</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+                <span class="k">else</span> <span class="p">[],</span>
             <span class="p">)</span>
             <span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="n">RePromt</span><span class="o">.</span><span class="n">promt_code_block</span><span class="o">.</span><span class="n">finditer</span><span class="p">(</span><span class="n">tools_promt_raw</span><span class="p">)</span>
         <span class="p">)</span>
     <span class="p">)</span>
-
-    <span class="n">p</span> <span class="o">=</span> <span class="n">PromtHeder</span><span class="p">(</span>
-        <span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">,</span> <span class="n">meta</span><span class="o">=</span><span class="n">meta</span><span class="p">,</span> <span class="n">des</span><span class="o">=</span><span class="n">des</span><span class="p">,</span> <span class="n">base_promt</span><span class="o">=</span><span class="n">base_promt</span><span class="p">,</span> <span class="n">tools_promt</span><span class="o">=</span><span class="n">tools_promt</span>
-    <span class="p">)</span>
-
-    <span class="k">return</span> <span class="n">p</span>
+    <span class="k">return</span> <span class="n">tools_promt</span>
 
 
-<span class="k">def</span> <span class="nf">parse_promt_md_to_json</span><span class="p">(</span><span class="n">promt_text</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span>    <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="k">def</span> <span class="nf">parse_examples</span><span class="p">(</span><span class="n">promt_text</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span>    <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="n">PromtExamples</span><span class="p">]:</span>
+    <span class="n">examples_raw</span> <span class="o">=</span> <span class="n">RePromt</span><span class="o">.</span><span class="n">examples_promt_h1</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">promt_text</span><span class="p">)[</span>
+        <span class="s2">&quot;examples_promt_text&quot;</span>
+    <span class="p">]</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+    <span class="n">expl</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="n">RePromt</span><span class="o">.</span><span class="n">examples_in_h2</span><span class="o">.</span><span class="n">finditer</span><span class="p">(</span><span class="n">examples_raw</span><span class="p">):</span>
+        <span class="n">_name</span> <span class="o">=</span> <span class="n">m</span><span class="p">[</span><span class="s2">&quot;name&quot;</span><span class="p">]</span>
+        <span class="n">in_text</span> <span class="o">=</span> <span class="n">m</span><span class="p">[</span><span class="s2">&quot;doc&quot;</span><span class="p">]</span>
+        <span class="n">out_text</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">for</span> <span class="n">m2</span> <span class="ow">in</span> <span class="n">RePromt</span><span class="o">.</span><span class="n">examples_out_h3</span><span class="o">.</span><span class="n">finditer</span><span class="p">(</span><span class="n">m</span><span class="p">[</span><span class="s2">&quot;out&quot;</span><span class="p">]):</span>
+            <span class="n">out_text</span><span class="p">[</span><span class="n">m2</span><span class="p">[</span><span class="s2">&quot;name&quot;</span><span class="p">]]</span> <span class="o">=</span> <span class="n">m2</span><span class="p">[</span><span class="s2">&quot;body&quot;</span><span class="p">]</span>
+
+        <span class="n">expl</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+            <span class="n">PromtExamples</span><span class="p">(</span>
+                <span class="n">name</span><span class="o">=</span><span class="n">_name</span><span class="p">,</span>
+                <span class="n">in_text</span><span class="o">=</span><span class="n">in_text</span><span class="p">,</span>
+                <span class="n">out_text</span><span class="o">=</span><span class="n">out_text</span><span class="p">,</span>
+            <span class="p">)</span>
+        <span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">expl</span>
+
+
+<span class="k">def</span> <span class="nf">parse_text_promt_md_to_json</span><span class="p">(</span>
+    <span class="n">promt_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">promt_group</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">promt_text</span><span class="p">:</span> <span class="nb">str</span>
+<span class="p">)</span>    <span class="o">-&gt;</span> <span class="n">PromtObj</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Распарсить весь Markdown файл с промтами</span>
 <span class="sd">    и вызвать для каждого промта функцию parse_header_md_to_obj</span>
 
+<span class="sd">    promt_name: Имя промта</span>
+<span class="sd">    promt_group: Имя к какой группе относиться этот промт</span>
 <span class="sd">    promt_text: Прмоты в Markdown формате</span>
 <span class="sd">    return: Промты в Json формате</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="n">arr_promts</span><span class="p">:</span> <span class="n">PromtHeder</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="c1"># Убрать комментарии из текста</span>
+    <span class="n">promt_text</span> <span class="o">=</span> <span class="n">RePromt</span><span class="o">.</span><span class="n">clear_comments</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">promt_text</span><span class="p">)</span>
 
-    <span class="n">h1_last</span><span class="p">:</span> <span class="n">re</span><span class="o">.</span><span class="n">Match</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">name</span> <span class="o">=</span> <span class="n">promt_name</span>
 
-    <span class="k">for</span> <span class="n">h1_now</span> <span class="ow">in</span> <span class="n">RePromt</span><span class="o">.</span><span class="n">search_h1</span><span class="o">.</span><span class="n">finditer</span><span class="p">(</span><span class="n">promt_text</span><span class="p">):</span>
-        <span class="n">h1_now</span><span class="p">:</span> <span class="n">re</span><span class="o">.</span><span class="n">Match</span>
+    <span class="c1"># Парсинг мета-данных</span>
+    <span class="n">meta</span> <span class="o">=</span> <span class="n">parse_meta</span><span class="p">(</span><span class="n">promt_group</span><span class="p">,</span> <span class="n">promt_text</span><span class="p">)</span>
 
-        <span class="k">if</span> <span class="n">h1_last</span><span class="p">:</span>
-            <span class="n">promt_header</span> <span class="o">=</span> <span class="n">promt_text</span><span class="p">[</span><span class="n">h1_last</span><span class="o">.</span><span class="n">span</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span> <span class="p">:</span> <span class="n">h1_now</span><span class="o">.</span><span class="n">span</span><span class="p">()[</span><span class="mi">0</span><span class="p">]]</span>
-            <span class="n">arr_promts</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">parse_header_md_to_obj</span><span class="p">(</span><span class="n">promt_header</span><span class="p">))</span>
-        <span class="n">h1_last</span> <span class="o">=</span> <span class="n">h1_now</span>
+    <span class="c1"># Парсинг основного промпта</span>
+    <span class="n">base_promt</span> <span class="o">=</span> <span class="n">parse_base_promt</span><span class="p">(</span><span class="n">promt_text</span><span class="p">)</span>
 
-    <span class="k">if</span> <span class="n">h1_last</span><span class="p">:</span>
-        <span class="n">promt_header</span> <span class="o">=</span> <span class="n">promt_text</span><span class="p">[</span><span class="n">h1_last</span><span class="o">.</span><span class="n">span</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span> <span class="p">:]</span>
-        <span class="n">arr_promts</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">parse_header_md_to_obj</span><span class="p">(</span><span class="n">promt_header</span><span class="p">))</span>
+    <span class="c1"># Парсинг промптов инструментов</span>
+    <span class="n">tools_promt</span> <span class="o">=</span> <span class="n">parse_tools_promt</span><span class="p">(</span><span class="n">promt_text</span><span class="p">)</span>
 
-    <span class="n">r</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">arr_promts</span><span class="p">,</span> <span class="n">ensure_ascii</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">r</span>
+    <span class="c1"># Парсинг примеров</span>
+    <span class="n">examples</span> <span class="o">=</span> <span class="n">parse_examples</span><span class="p">(</span><span class="n">promt_text</span><span class="p">)</span>
+
+    <span class="n">p</span> <span class="o">=</span> <span class="n">PromtObj</span><span class="p">(</span>
+        <span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">,</span>
+        <span class="n">meta</span><span class="o">=</span><span class="n">meta</span><span class="p">,</span>
+        <span class="n">doc</span><span class="o">=</span><span class="n">RePromt</span><span class="o">.</span><span class="n">doc_h1</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">promt_text</span><span class="p">)[</span><span class="s2">&quot;doc_text&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">strip</span><span class="p">(),</span>
+        <span class="n">base_promt</span><span class="o">=</span><span class="n">base_promt</span><span class="p">,</span>
+        <span class="n">tools_promt</span><span class="o">=</span><span class="n">tools_promt</span><span class="p">,</span>
+        <span class="n">expl</span><span class="o">=</span><span class="n">examples</span><span class="p">,</span>
+    <span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">JsonText</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">parse_file_promt_md_to_json</span><span class="p">(</span>
+    <span class="n">path_to_file_promt</span><span class="p">:</span> <span class="n">pathlib</span><span class="o">.</span><span class="n">Path</span><span class="p">,</span> <span class="n">promt_text</span><span class="p">:</span> <span class="nb">str</span>
+<span class="p">)</span>    <span class="o">-&gt;</span> <span class="n">JsonText</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Распарсить MArkdown файл и конвертировать его в Json</span>
+
+<span class="sd">    :param path_to_file_promt: Путь к файлу</span>
+<span class="sd">    :param str promt_text: Текст</span>
+<span class="sd">    :return str: Json</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">parse_text_promt_md_to_json</span><span class="p">(</span>
+        <span class="nb">str</span><span class="p">(</span><span class="n">path_to_file_promt</span><span class="o">.</span><span class="n">name</span><span class="p">),</span> <span class="nb">str</span><span class="p">(</span><span class="n">path_to_file_promt</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">name</span><span class="p">),</span> <span class="n">promt_text</span>
+    <span class="p">)</span>
 </code></pre></div>
-<h3 id="1_1">Пример 1</h3>
-<p>Функция: parse_header_md_to_obj<br>
-Докстринг: Распарсить раздел с промптом из Markdown и преобразовать его в объект.</p>
-<p>Функция: parse_promt_md_to_json<br>
-Докстринг: Распарсить весь Markdown файл с промптами, вызвать для каждого промта функцию parse_header_md_to_obj и преобразовать результат в JSON формат.</p>
+<h3 id="1">1</h3>
+<div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">parse_promt_code_block_template</span><span class="p">(</span><span class="n">text</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Разбирает текстовую строку и создает объекты PromtCodeBlockTemplates.</span>
+<span class="sd">    :param text: Текстовая строка с шаблонами кода промпта.</span>
+<span class="sd">    :return: Список объектов PromtCodeBlockTemplates.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+<span class="k">def</span> <span class="nf">parse_meta</span><span class="p">(</span><span class="n">promt_group</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">promt_text</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span>    <span class="o">-&gt;</span> <span class="n">PromtMeta</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Разбирает текстовую строку и создает объект PromtMeta с мета-данными о промпте.</span>
+<span class="sd">    :param promt_group: Группа промпта.</span>
+<span class="sd">    :param promt_text: Текстовая строка с мета-данными промпта.</span>
+<span class="sd">    :return: Объект PromtMeta.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+<span class="k">def</span> <span class="nf">parse_base_promt</span><span class="p">(</span><span class="n">promt_text</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span>    <span class="o">-&gt;</span> <span class="n">PromtBasePromt</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Разбирает текстовую строку и создает объект PromtBasePromt с основным промптом.</span>
+<span class="sd">    :param promt_text: Текстовая строка с основным промптом.</span>
+<span class="sd">    :return: Объект PromtBasePromt.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+<span class="k">def</span> <span class="nf">parse_tools_promt</span><span class="p">(</span><span class="n">promt_text</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span>    <span class="o">-&gt;</span> <span class="n">PromtToolsPromt</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Разбирает текстовую строку и создает объект PromtToolsPromt с промптами инструментов.</span>
+<span class="sd">    :param promt_text: Текстовая строка с промптами инструментов.</span>
+<span class="sd">    :return: Объект PromtToolsPromt.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+<span class="k">def</span> <span class="nf">parse_examples</span><span class="p">(</span><span class="n">promt_text</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span>    <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="n">PromtExamples</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Разбирает текстовую строку и создает список объектов PromtExamples с примерами промпта.</span>
+<span class="sd">    :param promt_text: Текстовая строка с примерами промпта.</span>
+<span class="sd">    :return: Список объектов PromtExamples.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+<span class="k">def</span> <span class="nf">parse_text_promt_md_to_json</span><span class="p">(</span>
+    <span class="n">promt_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">promt_group</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">promt_text</span><span class="p">:</span> <span class="nb">str</span>
+<span class="p">)</span>    <span class="o">-&gt;</span> <span class="n">PromtObj</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Разбирает текстовый файл Markdown с промптами и создает объект PromtObj.</span>
+<span class="sd">    :param promt_name: Имя промпта.</span>
+<span class="sd">    :param promt_group: Группа промпта.</span>
+<span class="sd">    :param promt_text: Текст промпта в формате Markdown.</span>
+<span class="sd">    :return: Объект PromtObj.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+<span class="k">def</span> <span class="nf">parse_file_promt_md_to_json</span><span class="p">(</span>
+    <span class="n">path_to_file_promt</span><span class="p">:</span> <span class="n">pathlib</span><span class="o">.</span><span class="n">Path</span><span class="p">,</span> <span class="n">promt_text</span><span class="p">:</span> <span class="nb">str</span>
+<span class="p">)</span>    <span class="o">-&gt;</span> <span class="n">JsonText</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Разбирает файл Markdown и конвертирует его в формат JSON.</span>
+<span class="sd">    :param path_to_file_promt: Путь к файлу промпта.</span>
+<span class="sd">    :param promt_text: Текст промпта.</span>
+<span class="sd">    :return: Текст в формате JSON.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+</code></pre></div>
     </div>
 </body>
 </html>
