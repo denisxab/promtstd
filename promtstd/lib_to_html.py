@@ -1,16 +1,19 @@
+import re
 from pathlib import Path
-from typing import Optional
 
 import markdown
-from lib_linter import StatusWarning, logLinter
 from lib_main import ParserPromtStd
 from lib_re import RePromt
 from lib_types import HTMLText
+from markdown.extensions.toc import TocExtension
+from pygments.formatters import HtmlFormatter
+from sass import compile
 
 
 class ParserPromtStdToHTML(ParserPromtStd):
     def __init__(self, select_file: Path) -> None:
         super().__init__(select_file)
+
         # Создание экземпляра класса Markdown
         self.md = markdown.Markdown(
             extensions=[
@@ -22,27 +25,32 @@ class ParserPromtStdToHTML(ParserPromtStd):
                 "pymdownx.betterem",
                 # добавляет возможность экранирования всех символов.
                 "pymdownx.escapeall",
-                # добавляет возможность использования блоков кода с различными языками программирования.
-                "pymdownx.superfences",
                 # добавляет автоматическое преобразование ссылок в HTML-ссылки.
                 "pymdownx.magiclink",
+                # добавляет возможность использования блоков кода с различными языками программирования.
+                "pymdownx.superfences",
                 #
                 ##
                 ###
                 ##
                 #
-                # подсвечивает синтаксис блоков кода.
-                "codehilite",
-                # "markdown.extensions.codehilite",
-                # добавляет подсветку синтаксиса кода с помощью Pygments.
-                # "pymdownx.highlight",
+                # Создание экземпляра расширения TOC с указанием места для вставки оглавления
+                TocExtension(marker="[TOC]", title="Оглавление"),
             ],
             output_format="html5",
         )
-        dirs = Path(__file__).parent
-        self.css_style = (dirs / "bootstrap.css").read_text() + (
-            dirs / "css.css"
-        ).read_text()
+        # Папка с CSS
+        dir_css = Path(__file__).parent / "from_html" / "css"
+
+        # CSS стили
+        self.css_style = "{bootstrap}{base_style}{codehigligt}".format(
+            # Стили bootstrap
+            bootstrap=(dir_css / "bootstrap.css").read_text(),
+            # Базовые стили
+            base_style=compile(filename=str((dir_css / "base_style.scss"))),
+            # Стили для подсветки кода
+            codehigligt=HtmlFormatter(style="monokai").get_style_defs(".highlight"),
+        ).replace("\n", "")
 
     def parse_text_promt_md_to_html(
         self, promt_text: str, promt_name: str, promt_group_name: str
@@ -58,6 +66,10 @@ class ParserPromtStdToHTML(ParserPromtStd):
 
         # Убрать комментарии из текста
         promt_text = RePromt.md_comment.sub("", promt_text)
+        # Увеличиваем количество пробелов у списка, чтобы он считался вложенным для python-markdown
+        promt_text = re.sub(" {1,3}-", "    -", promt_text)
+        # Вставляем оглавление
+        promt_text = f"[TOC]\n\n{promt_text}"
 
         # Конвертация текста в HTML
         html = """
