@@ -2,7 +2,6 @@ import sys
 from pathlib import Path
 
 import pytest
-
 from utils import get_file_hash
 
 sys.path.insert(0, str(Path(__file__).parent.parent))
@@ -22,18 +21,18 @@ pin = Path(__file__).parent.parent.parent / "examples"
         ),
         (
             Path("Документирование кода.md"),
-            "def0b48df8057096faf4be3a4a35959d606466946d8f1aa215535ae301e878ab",
+            "6911e545648182adf0791192d0301540cd7699b64f5dc42a57f0abc161de9212",
             "8c8c70e7513314bedb416b853bd4b1578a398a82c534216bcb075f3241300062",
         ),
         (
             Path("Оптимизация кода.md"),
-            "f8a32191910b89d99f8bf816c7de5143890196944493258751d1d64416ee1f9d",
+            "23621f774ba51a8e811e56e4880bf7709d94294a7444dc83fa24a3ea24f3ea14",
             "e1d87a57338e4447b6278a1d857ac5b68b19db10cd79abd31d8debe60b55910e",
         ),
         (
             Path("Написание README большому проекту.md"),
             "66e2268fdb2c99992cf287b3419b9623858a7f13ab3087ebfd585d48506d61b4",
-            "373c0ff9bbea695bce0efb48f84eff4337731daa94e9c0b324c61458cc9e291e",
+            "85a6cf90ea1d8b0019a7785e116d7f9cf81bbd5aa1d55cdd413b683a86e5e309",
         ),
         (
             Path("Написать программу на Python.md"),
@@ -59,7 +58,7 @@ def test_parse_promt_md_to_json(file_in: Path, hash_in: str, hash_out: str):
     :param str hash_out: Хеш Json файла.
     """
     path_to_file_promt = pin / file_in
-    path_out_file_promt = pin / file_in.with_suffix(".json")
+    path_out_file_promt = pin / "json" / file_in.with_suffix(".json")
 
     assert get_file_hash(path_to_file_promt) == hash_in
     assert get_file_hash(path_out_file_promt) == hash_out
