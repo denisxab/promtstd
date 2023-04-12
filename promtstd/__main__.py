@@ -10,7 +10,7 @@ from lib_to_html import ParserPromtStdToHTML
 from lib_to_json import ParserPromtStdToJson
 
 
-def main(to_build: Literal["json", "html"] = None, file: Optional[str] = None):
+def main(to_build: Literal["json", "html", "all"] = None, file: Optional[str] = None):
     file_out = None
     if not file:
         parser = ArgumentParser(
@@ -18,7 +18,7 @@ def main(to_build: Literal["json", "html"] = None, file: Optional[str] = None):
         )
         parser.add_argument(
             "to_build",
-            choices=["json", "html"],
+            choices=["json", "html", "all"],
             type=str,
             help="В какой тип нужно собрать",
         )
@@ -40,7 +40,7 @@ def main(to_build: Literal["json", "html"] = None, file: Optional[str] = None):
         file_out = Path(file)
 
     ###
-    if to_build == "json":
+    if to_build == "json" or to_build == "all":
         r = ParserPromtStdToJson(file_out).parse_file_promt_md_to_json()
         logLinter(StatusSuccess.end_compilation_json, where_event=file_out)
 
@@ -52,7 +52,7 @@ def main(to_build: Literal["json", "html"] = None, file: Optional[str] = None):
         path_out_file_promt.write_text(r.text)
         logLinter(StatusSuccess.save_to_json_file, where_event=file_out)
 
-    elif to_build == "html":
+    if to_build == "html" or to_build == "all":
         r = ParserPromtStdToHTML(file_out).parse_file_promt_md_to_html()
         logLinter(StatusSuccess.end_compilation_html, where_event=file_out)
 
