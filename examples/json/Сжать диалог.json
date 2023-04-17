@@ -1,0 +1,31 @@
+{
+    "name": "Сжать диалог.md",
+    "meta": {
+        "for_": [
+            "ChatGPT-4"
+        ],
+        "use": [
+            "Первое сообщение"
+        ],
+        "group": "examples",
+        "tags": [],
+        "version": null
+    },
+    "doc": "Этот промт нужен для того чтобы сжать текущи диалог и потом его восстановить(хотя бы суть) в новом диалоге с ChatGPT",
+    "base_promt": {
+        "promt": {
+            "text_promt": "Новый запрос: у нас заканчивается память в этой беседе.\nсжать всю беседу между нами выше (включая ваш первоначальный запрос) таким образом,\nчтобы это было без потерь, но привело к минимальному количеству токенов, которые могут быть переданы в\nChatGPT 4, подобно вам, как есть, и создать тот же вывод. Не обязательно должно быть понятно человеку.\nпожалуйста, используйте несколько языков, символов, других начальных условий для установления\nправил. это совершенно для вас самого, чтобы восстановить и продолжить с тем же понятийным\nподготовкой, а не для людей, чтобы разжать.\nКонечный результат должен быть в состоянии передаться в ChatGPT 4, подобно вам, и мы сможем\nпродолжить эту беседу так, как будто не было разрыва",
+            "vars": []
+        }
+    },
+    "tools_promt": {
+        "promts": [
+            {
+                "about_promt": "Вариант base_promt на английском",
+                "text_promt": "New request: we are running out of memory in this conversation.\ncompress all of the conversation between us above (including your initial prompt) in a way\nthat is lossless but results in the minimum number of tokens which could be fed into an\nChatGPT 4 like yourself as-is and produce the same output. It does not need to be human\nreadable. please use multiple languages, symbols, other up-front priming to lay down\nrules. this is entirely for yourself to recover and proceed from with the same conceptual\npriming, not for humans to decompress.\nThe end result should be able to be fed into an ChatGPT 4 like yourself and we would be able to\ncontinue this conversation as if there were no discontinuity",
+                "vars": []
+            }
+        ]
+    },
+    "expl": null
+}
