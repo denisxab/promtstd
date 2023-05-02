@@ -10,7 +10,7 @@ class RePromt:
     # ? Заголовок первого уровня
     h1_pattern = r"((?:\n|\A)#{{1}} {header}\n)(?P<{group_name}>(.*\s*(?!#{{1}} ))+)"
     # ? Комментарии в Markdown
-    md_comment = compile(r"%[^%]+%")
+    md_comment = compile(r"%%[^%]+%%")
     # ? Парсинг markdown словарей
     md_dict = compile(r"- (?P<key>[\w\d_ -]+)~(?P<value>[^\n]+)\n?")
     # ? Парсинг markdown списка

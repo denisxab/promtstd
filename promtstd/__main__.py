@@ -86,6 +86,7 @@ if __name__ == "__main__":
 
     # to_build = "json"
     # pt = Path(__file__).parent.parent / "examples"
+    # main(to_build, pt / "Предсказание вероятности события.md")
     # main(to_build, pt / "Генерация кода на Python.md")
     # main(to_build, pt / "Документирование кода.md")
     # main(to_build, pt / "Изучение новой темы в IT.md")
